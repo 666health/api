@@ -10,6 +10,21 @@ admin.initializeApp(functions.config().firebase);
 
 app.use(cors());
 app.use(express.json());
+app.use(require("./middleware"));
+
+app.get("/", async (req, res) => {
+    await admin.messaging().sendToDevice(req.query.token, {
+        notification: {
+            title: "Alerta",
+            body: "Lembrar de tomar o Minoxidil",
+            clickAction: "https://health-hackaton.web.app/",
+        },
+
+        data: {},
+    });
+
+    res.send("ok").end();
+});
 
 app.use("/users", require("./users"));
 

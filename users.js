@@ -80,4 +80,30 @@ router.post("/login", async (req, res, next) => {
     });
 });
 
+router.post("/push", async (req, res, next) => {
+    if (!req.user) {
+        throw "Não autenticado";
+    }
+
+    const { pushToken } = req.body;
+
+    if (!pushToken) {
+        throw "Token inválido";
+    }
+
+    await db
+        .collection("users")
+        .doc(req.user.email)
+        .update({
+            pushToken,
+        });
+
+    res.json({
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        token: user.token,
+    });
+});
+
 module.exports = router;
