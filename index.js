@@ -15,7 +15,7 @@ app.use(require("./middleware"));
 app.get("/", async (req, res) => {
     await admin.messaging().sendToDevice(req.query.token, {
         notification: {
-            title: "Alerta",
+            title: "Alerta do KeepCare",
             body: "Lembrar de tomar o Minoxidil",
             clickAction: "https://health-hackaton.web.app/",
         },
